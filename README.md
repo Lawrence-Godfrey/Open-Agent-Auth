@@ -6,13 +6,14 @@ Open Agent Auth is a Python library that implements decentralized agent authenti
 
 ## Features
 
--  **Decentralized Trust Model** - No dependency on central registries
--  **Web Bot Auth Compatible** - Implements HTTP Message Signatures (RFC 9421)
--  **Ed25519 Cryptography** - Fast, secure public-key signatures
--  **Certificate-Based Authentication** - Similar to SSL/TLS certificate chains
--  **Type-Safe** - Built with Pydantic for data validation
--  **Async-Ready** - Designed for async/await patterns
--  **Production-Ready** - Comprehensive error handling and validation
+- **Decentralized Trust Model** - No dependency on central registries
+- **Blockchain Integration** - Optional blockchain-based CA registry with economic staking
+- **Web Bot Auth Compatible** - Implements HTTP Message Signatures (RFC 9421)
+- **Ed25519 Cryptography** - Fast, secure public-key signatures
+- **Certificate-Based Authentication** - Similar to SSL/TLS certificate chains
+- **Type-Safe** - Built with Pydantic for data validation
+- **Async-Ready** - Designed for async/await patterns
+- **Production-Ready** - Comprehensive error handling and validation
 
 ## Installation
 
@@ -136,6 +137,37 @@ from open_agent_auth import TrustStore
 
 trust_store = TrustStore.from_config("trust_store.yaml")
 ```
+
+### Blockchain Trust Store (Optional)
+
+For maximum decentralization, use a blockchain-based CA registry instead of YAML files:
+
+```python
+from web3 import Web3
+from open_agent_auth.trust import BlockchainTrustStore
+
+# Connect to blockchain (e.g., Ethereum, Polygon)
+w3 = Web3(Web3.HTTPProvider('https://mainnet.infura.io/v3/YOUR_KEY'))
+
+# Use smart contract as trust store
+trust_store = BlockchainTrustStore(
+    web3_provider=w3,
+    registry_address="0x1234...",  # CA Registry contract
+    min_stake=10000  # Minimum stake in wei
+)
+
+# Same interface as regular TrustStore
+verifier = AgentVerifier(trust_store=trust_store)
+```
+
+**Benefits:**
+- No central authority controls the CA list
+- Economic security via staking (malicious CAs lose stake)
+- Transparent, auditable CA registration
+- Merchants don't need to update trust stores manually
+- Community governance can deactivate bad actors
+
+See `examples/blockchain_example.py` for a complete demonstration.
 
 ## Architecture
 
