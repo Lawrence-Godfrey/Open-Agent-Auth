@@ -20,6 +20,7 @@ classifiers = [
 dependencies = [
     "asn1crypto>=1.5.1",
     "cryptography>=46.0.3",
+    "fastapi>=0.120.0",
     "http-message-signatures>=1.0.0",
     "httpx>=0.28.1",
     "pydantic>=2.12.3",
