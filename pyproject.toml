@@ -25,6 +25,7 @@ dependencies = [
     "python-dateutil>=2.9.0.post0",
     "pyyaml>=6.0.3",
     "structlog>=25.4.0",
+    "web3>=7.14.0",
 ]
 
 [build-system]
